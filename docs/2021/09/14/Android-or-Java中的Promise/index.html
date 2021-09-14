@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Android or Java中的Promise | Hexo</title>
+  <meta name="description" content="写过一段时间的前端，感觉前端里面出现的一些写法，不论是在代码的阅读方面还是在开发人员的编码方面，确实能带来不少的便利。比如async await promise这一套，先看看javascript里面的用法。123456789101112131415161718192021async submit() &amp;#123;  console.log(&amp;#x27;start&amp;#x27;)  const res">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android or Java中的Promise">
+<meta property="og:url" content="https://zhaozhentao.github.io/hexo/2021/09/14/Android-or-Java%E4%B8%AD%E7%9A%84Promise/index.html">
+<meta property="og:site_name" content="zzt">
+<meta property="og:description" content="写过一段时间的前端，感觉前端里面出现的一些写法，不论是在代码的阅读方面还是在开发人员的编码方面，确实能带来不少的便利。比如async await promise这一套，先看看javascript里面的用法。123456789101112131415161718192021async submit() &amp;#123;  console.log(&amp;#x27;start&amp;#x27;)  const res">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-09-14T02:55:36.000Z">
+<meta property="article:modified_time" content="2021-09-14T07:41:35.015Z">
+<meta property="article:author" content="zhaozhentao">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://zhaozhentao.github.io/hexo/2021/09/14/Android-or-Java%E4%B8%AD%E7%9A%84Promise/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="zzt" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/hexo/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/zhaozhentao" target="_blank">
+          <img class="img-circle img-rotate" src="/hexo/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">涛</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Web Developer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> FoShan, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/hexo/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/cofess" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/hexo/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>Hi!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+
+    
+      
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2021/09/">September 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2021/06/">June 2021</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/hexo/2021/09/14/Android-or-Java%E4%B8%AD%E7%9A%84Promise/" class="title">Android or Java中的Promise</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-09-14T02:55:36.000Z" itemprop="datePublished">2021-09-14</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/hexo/2021/06/25/tips/" class="title">tips</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-06-25T01:14:31.000Z" itemprop="datePublished">2021-06-25</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/hexo/2021/06/17/%E6%8F%90%E5%8D%87%E5%B9%B8%E7%A6%8F%E6%84%9F%E7%9A%84%E7%89%A9%E4%BB%B6/" class="title">提升幸福感的物件</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-06-17T02:01:26.000Z" itemprop="datePublished">2021-06-17</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Android-or-Java中的Promise" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android or Java中的Promise
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/hexo/2021/09/14/Android-or-Java%E4%B8%AD%E7%9A%84Promise/" class="article-date">
+	  <time datetime="2021-09-14T02:55:36.000Z" itemprop="datePublished">2021-09-14</time>
+	</a>
+</span>
+        
+        
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/hexo/2021/09/14/Android-or-Java%E4%B8%AD%E7%9A%84Promise/#comments" class="article-comment-link">Comments</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h4 id="写过一段时间的前端，感觉前端里面出现的一些写法，不论是在代码的阅读方面还是在开发人员的编码方面，确实能带来不少的便利。"><a href="#写过一段时间的前端，感觉前端里面出现的一些写法，不论是在代码的阅读方面还是在开发人员的编码方面，确实能带来不少的便利。" class="headerlink" title="写过一段时间的前端，感觉前端里面出现的一些写法，不论是在代码的阅读方面还是在开发人员的编码方面，确实能带来不少的便利。"></a>写过一段时间的前端，感觉前端里面出现的一些写法，不论是在代码的阅读方面还是在开发人员的编码方面，确实能带来不少的便利。</h4><h4 id="比如async-await-promise这一套，先看看javascript里面的用法。"><a href="#比如async-await-promise这一套，先看看javascript里面的用法。" class="headerlink" title="比如async await promise这一套，先看看javascript里面的用法。"></a>比如<code>async</code> <code>await</code> <code>promise</code>这一套，先看看javascript里面的用法。</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="title">submit</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;start&#x27;</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="built_in">this</span>.sleep()</span><br><span class="line"></span><br><span class="line">  <span class="built_in">console</span>.log(res)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 业务代码1 </span></span><br><span class="line">  <span class="keyword">await</span> <span class="built_in">this</span>.sleep()</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 业务代码2</span></span><br><span class="line">  <span class="keyword">await</span> <span class="built_in">this</span>.sleep()</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 业务代码3 </span></span><br><span class="line">&#125;,</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">sleep</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> resolve(<span class="string">&#x27;finish&#x27;</span>), <span class="number">1000</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="在-async-修饰的submit方法里面，await-sleep方法，将会在调用sleep方法1s后才继续往下运行，这样可以使得submit方法里面的代码保持从下往上顺序，不需要多一层丑陋的嵌套。"><a href="#在-async-修饰的submit方法里面，await-sleep方法，将会在调用sleep方法1s后才继续往下运行，这样可以使得submit方法里面的代码保持从下往上顺序，不需要多一层丑陋的嵌套。" class="headerlink" title="在 async 修饰的submit方法里面，await sleep方法，将会在调用sleep方法1s后才继续往下运行，这样可以使得submit方法里面的代码保持从下往上顺序，不需要多一层丑陋的嵌套。"></a>在 <code>async</code> 修饰的submit方法里面，<code>await</code> sleep方法，将会在调用sleep方法1s后才继续往下运行，这样可以使得submit方法里面的代码保持从下往上顺序，不需要多一层丑陋的嵌套。</h4><h4 id="对比一下不使用-async-await-的代码…，回调地狱，谜之嵌套"><a href="#对比一下不使用-async-await-的代码…，回调地狱，谜之嵌套" class="headerlink" title="对比一下不使用 async await 的代码…，回调地狱，谜之嵌套"></a>对比一下不使用 <code>async</code> <code>await</code> 的代码…，回调地狱，谜之嵌套</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">submit</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;start&#x27;</span>)</span><br><span class="line"></span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 1s后执行业务代码1</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// 2s后执行业务代码2</span></span><br><span class="line">      </span><br><span class="line">      <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 3s后执行业务代码3</span></span><br><span class="line">      &#125;, <span class="number">1000</span>)</span><br><span class="line">    &#125;, <span class="number">1000</span>)</span><br><span class="line">  &#125;, <span class="number">1000</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="对比明显。"><a href="#对比明显。" class="headerlink" title="对比明显。"></a>对比明显。</h4><h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><h4 id="写Java代码很长的一段时间里面，尤其是Android客户端，涉及大量的用户交互操作-异步-，不得不写出了很多嵌套的代码。常见的比如下面的代码…"><a href="#写Java代码很长的一段时间里面，尤其是Android客户端，涉及大量的用户交互操作-异步-，不得不写出了很多嵌套的代码。常见的比如下面的代码…" class="headerlink" title="写Java代码很长的一段时间里面，尤其是Android客户端，涉及大量的用户交互操作(异步)，不得不写出了很多嵌套的代码。常见的比如下面的代码…"></a>写Java代码很长的一段时间里面，尤其是Android客户端，涉及大量的用户交互操作(异步)，不得不写出了很多嵌套的代码。常见的比如下面的代码…</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> AlertDialog.Builder(context)</span><br><span class="line">    .setNegativeButton(<span class="string">&quot;取消&quot;</span>, (dialogInterface, i) -&gt; &#123;</span><br><span class="line">        <span class="comment">// 点击取消后的业务代码</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .setPositiveButton(<span class="string">&quot;确定&quot;</span>, (dialogInterface, i) -&gt; &#123;</span><br><span class="line">        <span class="comment">// 点击确定后，提交表单</span></span><br><span class="line">        Http.post(<span class="string">&#x27;xxx url&#x27;</span>, res -&gt; &#123;</span><br><span class="line">            <span class="comment">// 网络响应后，更新UI</span></span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 假如需要继续请求网络，套娃...</span></span><br><span class="line">            Http.post(<span class="string">&#x27;xxx url&#x27;</span>, res -&gt; &#123;</span><br><span class="line">                </span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">    .show();</span><br></pre></td></tr></table></figure>
+
+<h4 id="今天发现了一个可以实现js里面类似写法的一个库-parseq，借助这个库可以将很多的异步操作Promise化，使得被诟病已久的Java代码也可以变得清晰一点。下面是将弹窗操作Promise化。"><a href="#今天发现了一个可以实现js里面类似写法的一个库-parseq，借助这个库可以将很多的异步操作Promise化，使得被诟病已久的Java代码也可以变得清晰一点。下面是将弹窗操作Promise化。" class="headerlink" title="今天发现了一个可以实现js里面类似写法的一个库 parseq，借助这个库可以将很多的异步操作Promise化，使得被诟病已久的Java代码也可以变得清晰一点。下面是将弹窗操作Promise化。"></a>今天发现了一个可以实现js里面类似写法的一个库 <a target="_blank" rel="noopener" href="https://mvnrepository.com/artifact/com.linkedin.parseq/parseq"><code>parseq</code></a>，借助这个库可以将很多的异步操作Promise化，使得被诟病已久的Java代码也可以变得清晰一点。下面是将弹窗操作Promise化。</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PromiseDialog</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">confirm</span><span class="params">(Activity activity, String message)</span> </span>&#123;</span><br><span class="line">        SettablePromise&lt;Boolean&gt; promise = Promises.settable();</span><br><span class="line"></span><br><span class="line">        activity.runOnUiThread(() -&gt; <span class="keyword">new</span> AlertDialog.Builder(activity)</span><br><span class="line">            .setTitle(<span class="string">&quot;提示&quot;</span>)</span><br><span class="line">            .setMessage(message)</span><br><span class="line">            .setNegativeButton(<span class="string">&quot;取消&quot;</span>, (d, i) -&gt; promise.done(<span class="keyword">false</span>))</span><br><span class="line">            .setPositiveButton(<span class="string">&quot;确定&quot;</span>, (d, i1) -&gt; promise.done(<span class="keyword">true</span>))</span><br><span class="line">            .show());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            promise.await();</span><br><span class="line">            <span class="keyword">return</span> promise.get();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 下面是调用示例</span></span><br><span class="line"><span class="keyword">boolean</span> result = PromiseDialog.confirm(</span><br><span class="line">    someActivity,</span><br><span class="line">    <span class="string">&quot;确定要删除吗？&quot;</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">// result true or false</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="经过包装后，异步的交互代码变成了同步代码，其他异步的操作也可以进行类似改造🎉🎉🎉"><a href="#经过包装后，异步的交互代码变成了同步代码，其他异步的操作也可以进行类似改造🎉🎉🎉" class="headerlink" title="经过包装后，异步的交互代码变成了同步代码，其他异步的操作也可以进行类似改造🎉🎉🎉"></a>经过包装后，异步的交互代码变成了同步代码，其他异步的操作也可以进行类似改造🎉🎉🎉</h4>
+      
+    </div>
+    <div class="article-footer">
+      
+    </div>
+  </article>
+  
+    
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/hexo/2021/06/25/tips/" title="tips"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>Maybe you could buy me a cup of coffee.</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/hexo/images/donate/alipayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open alipay app scan this qrcode, buy me a coffee!</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/hexo/images/donate/wechatpayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open wechat app scan this qrcode, buy me a coffee!</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> alipay</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> wechat payment</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/cofess" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/hexo/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/hexo/js/plugin.min.js"></script>
+
+
+<script src="/hexo/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/hexo/',
+        CONTENT_URL: '/hexo/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/hexo/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
