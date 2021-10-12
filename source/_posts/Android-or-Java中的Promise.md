@@ -91,7 +91,7 @@ public class PromiseDialog {
             .setTitle("提示")
             .setMessage(message)
             .setNegativeButton("取消", (d, i) -> promise.done(false))
-            .setPositiveButton("确定", (d, i1) -> promise.done(true))
+            .setPositiveButton("确定", (d, i) -> promise.done(true))
             .show());
 
         try {
